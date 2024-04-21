@@ -1,62 +1,103 @@
-.PHONY: clean run lib inspect test help
+#
+# makefile
+#
 
+# Variables Used by Implicit Rules
 AR := ar rcvs
 CC := gcc
 CXX :=
 RM := rm -rf
 CFLAGS := -O1 -Iinclude
 CPPFLAGS :=
-LDFLAGS := -Llib
-LDLIBS := -lm
+LDFLAGS :=
+LDLIBS :=
 
-PROJECTNAME := Test_Library
-BUILDPATH := build/
-MAINFILENAME := src/source.c
-
+# Variables Used by My Rules
+PROJECTNAME := schrocat
 LIBRARYNAME := schrocat
-SRCFILEPATH := src/
-SRCS := schrocat1.c\
-		schrocat2.c
+OUTDIR := ./build
+BINDIR := ./bin
+INCDIR := ./include
+SRCDIR := ./src
+TESTDIR := ./test
 
-SRCFILENAME := $(SRCS:%=$(SRCFILEPATH)%)
-OBJFILEPATH := $(BUILDPATH)tmp/
-OBJS := $(SRCS:%.c=%.o)
-OBJFILENAME := $(OBJS:%=$(OBJFILEPATH)%)
+OBJDIR := $(OUTDIR)/obj
+DEPDIR := $(OUTDIR)/dep
+EXECUTEFILENAME := $(BINDIR)/$(PROJECTNAME).out
+SRCS := $(wildcard $(SRCDIR)/*.c)
+TESTS := $(wildcard $(TESTDIR)/*.c)
+OBJS := $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
+DEPS := $(addprefix $(DEPDIR)/, $(notdir $(SRCS:.c=.d))) + $(addprefix $(DEPDIR)/, $(notdir $(TESTS:.c=.d)))
 
-$(BUILDPATH)$(PROJECTNAME).out : $(MAINFILENAME) $(OBJFILENAME)
-	@mkdir -p $(BUILDPATH)
-	$(CC) $(MAINFILENAME) $(OBJFILENAME) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $@
+DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
 
-$(OBJFILENAME) : $(SRCFILENAME)
-	@mkdir -p $(OBJFILEPATH)
-	$(CC) $(@:$(OBJFILEPATH)%.o=$(SRCFILEPATH)%.c) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -c -o $@
+.PHONY: all
+all : $(EXECUTEFILENAME)
 
-run :
-	./$(BUILDPATH)$(PROJECTNAME).out
+$(EXECUTEFILENAME) : $(OBJS) $(addprefix $(OBJDIR)/, $(notdir $(TESTS:.c=.o))) | $(BINDIR)
+	$(CC) $^ $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $@
 
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPDIR)/%.d | $(OBJDIR) $(DEPDIR)
+	$(CC) $(DEPFLAGS) $< $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -c -o $@
+
+$(OBJDIR)/%.o : $(TESTDIR)/%.c $(DEPDIR)/%.d | $(OBJDIR) $(DEPDIR)
+	$(CC) $(DEPFLAGS) $< $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -c -o $@
+
+include $(wildcard $(DEPS))
+
+$(DEPS) :
+
+$(BINDIR):
+	@mkdir -p $@
+
+$(OBJDIR):
+	@mkdir -p $@
+
+$(DEPDIR):
+	@mkdir -p $@
+
+.PHONY: clean
 clean :
-	$(RM) $(BUILDPATH)
-	@echo "Remove \"$(BUILDPATH)\""
+	$(RM) $(OBJDIR) $(DEPDIR)
+	@echo "Remove \"$(OBJDIR) $(DEPDIR)\""
 
-lib : $(OBJFILENAME)
-	@mkdir -p $(BUILDPATH)
-	@echo "\e[33mGenerate static library(lib$(LIBRARYNAME).a) from $(OBJFILENAME)\e[m"
-	$(AR) $(BUILDPATH)lib$(LIBRARYNAME).a $(OBJFILENAME)
+.PHONY: fclean
+fclean :
+	$(RM) $(EXECUTEFILENAME)
+	@echo "Remove \"$(EXECUTEFILENAME)\""
+
+.PHONY: re
+re : fclean all
+
+.PHONY: execute
+execute :
+	$(EXECUTEFILENAME)
+
+.PHONY: debug
+debug : CFLAGS += -D_DEBUG
+debug : clean fclean $(EXECUTEFILENAME)
+
+.PHONY: lib
+lib : $(OBJS)
+	@echo "\e[33mGenerate static library(lib$(LIBRARYNAME).a) from $(OBJS)\e[m"
+	$(AR) lib$(LIBRARYNAME).a $(OBJS)
 	@echo ""
 
-inspect :
-	nm $(BUILDPATH)lib$(LIBRARYNAME).a
+.PHONY: inspect
+inspect : lib$(LIBRARYNAME).a
+	nm lib$(LIBRARYNAME).a
 	@echo ""
 
-test :
-	@echo ""
-
+.PHONY: help
 help :
 	@echo "option"
 	@echo "  (default) : Compile"
-	@echo "        run : Run (Execute $(PROJECTNAME).out)"
-	@echo "      clean : Crean (Remove \"build\")"
-	@echo "        lib : Generate static library"
-	@echo "    inspect : Inspect the generated static library"
-	@echo "       test : Debug makefile"
+	@echo "        all : Compile"
+	@echo "    execute : Execute \"$(EXECUTEFILENAME)\""
+	@echo "      clean : Crean (Remove \"$(OBJDIR) $(DEPDIR)\")"
+	@echo "     fclean : Crean (Remove \"$(EXECUTEFILENAME)\")"
+	@echo "         re : fclean & all"
+	@echo "      debug : "
+	@echo "        lib : "
+	@echo "    inspect : "
 	@echo "       help : This"

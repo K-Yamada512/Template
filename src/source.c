@@ -5,7 +5,7 @@
 *		C code template main file
 *		
 *	attention:
-*		library libschrocat.a is used, import schrocat1.h and schrocat2.h
+*		library libschrocat.a is used, include schrocat1.h and schrocat2.h
 *
 *	history:
 *		2024/04/13:K.Yamada :create file
@@ -17,7 +17,6 @@
 //standard library
 #include <stdio.h>
 #include <stdint.h>
-#include <math.h>
 
 #include <source.h>
 
@@ -80,6 +79,10 @@ int main(uint64_t argc, char const* argv[])
 	printf("%d\r\n", NyanNyan(catcat));
 
 	Shaaaaaaaa();
+
+#ifdef _DEBUG
+	printf("DEBUG code\r\n");
+#endif /*_DEBUG*/
 
 	return 0;
 }
