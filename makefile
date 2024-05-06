@@ -58,16 +58,8 @@ $(DEPDIR):
 
 .PHONY: clean
 clean :
-	$(RM) $(OBJDIR) $(DEPDIR)
-	@echo "Remove \"$(OBJDIR) $(DEPDIR)\""
-
-.PHONY: fclean
-fclean :
-	$(RM) $(EXECUTEFILENAME)
-	@echo "Remove \"$(EXECUTEFILENAME)\""
-
-.PHONY: re
-re : fclean all
+	$(RM) $(OBJDIR) $(DEPDIR) $(EXECUTEFILENAME)
+	@echo "Remove \"$(OBJDIR) $(DEPDIR) $(EXECUTEFILENAME)\""
 
 .PHONY: execute
 execute :
@@ -75,7 +67,7 @@ execute :
 
 .PHONY: debug
 debug : CFLAGS += -D_DEBUG
-debug : clean fclean $(EXECUTEFILENAME)
+debug : clean $(EXECUTEFILENAME)
 
 .PHONY: lib
 lib : $(OBJS)
@@ -94,9 +86,7 @@ help :
 	@echo "  (default) : Compile"
 	@echo "        all : Compile"
 	@echo "    execute : Execute \"$(EXECUTEFILENAME)\""
-	@echo "      clean : Crean (Remove \"$(OBJDIR) $(DEPDIR)\")"
-	@echo "     fclean : Crean (Remove \"$(EXECUTEFILENAME)\")"
-	@echo "         re : fclean & all"
+	@echo "      clean : Crean (Remove \"$(OBJDIR) $(DEPDIR) $(EXECUTEFILENAME)\")"
 	@echo "      debug : "
 	@echo "        lib : "
 	@echo "    inspect : "
