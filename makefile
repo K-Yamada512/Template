@@ -14,7 +14,7 @@ RM := rm -rf
 CFLAGS := -O1 -Iinclude -Itest -Iparts/schrocat/include
 CPPFLAGS :=
 LDFLAGS := -Llib
-LDLIBS := -lschrocat
+LDLIBS := -lm -lschrocat
 
 # Variables Used by My Rules
 PROJECTNAME := Template

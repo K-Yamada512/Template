@@ -1,24 +1,23 @@
 /*****************************************************************************/
 /*
-*	filename:calculate1.c
+*	filename:calculate3.h
 *	about:
-*		calculate function 1
+*		calculate function 3 headerfile
 *
 *	attention:
 *
 *	history:
-*		2024/04/13:K.Yamada :create this file
-*		2024/06/02:K.Yamada :create function (Fractrial)
+*		2024/06/02:K.Yamada :create this file
 */
 /*****************************************************************************/
+#ifndef _INCLUDE_GUARD_CALCULATE3_H_
+#define _INCLUDE_GUARD_CALCULATE3_H_
+
 /*****************************************************************************/
 /*                         include headerfile                                */
 /*****************************************************************************/
 /*standard library*/
-#include <stdlib.h>
 #include <stdint.h>
-
-#include <calculate1.h>
 
 /*****************************************************************************/
 /*                               define const                                */
@@ -33,38 +32,34 @@
 /*****************************************************************************/
 /*                         define structure (global)                         */
 /*****************************************************************************/
-/*none*/
+struct _bisection_method_structure
+{
+	double (*p_func)(double);
+	double initialization_left;
+	double initialization_right;
+	uint64_t time_out_loop_count;
+};
+
+struct _newton_raphson_method_structure
+{
+	double (*p_func)(double);
+	double (*p_derivated_func)(double);
+	double initialization_x;
+	uint64_t time_out_loop_count;
+};
+
+/*****************************************************************************/
+/*                               define type                                 */
+/*****************************************************************************/
+typedef struct _bisection_method_structure bisection_method_struct;
+typedef struct _newton_raphson_method_structure newton_raphson_method_struct;
 
 /*****************************************************************************/
 /*                                 define function                           */
 /*****************************************************************************/
-/*
-*	function name:Fractrial
-*	about:
-*		calculate fractrial (n!)
-*
-*	out	uint64_t*	ans		:pointer variable to store the answer to the calculation
-*	in	uint64_t	n		:natural number
-*	out	int64_t				:error code
-*/
-int64_t Fractrial(uint64_t* ans, uint64_t n)
-{
-	if (ans == NULL)return -1;
-	if (n < 1)return -2;
 
-	*ans = 0;
+int64_t BisectionMethod(double* ans, uint64_t* breakpoint, bisection_method_struct bms);
 
-	uint64_t answer = 1;
+int64_t NewtonRaphson(double* ans, uint64_t* breakpoint, newton_raphson_method_struct nrms);
 
-	for (uint64_t i = 0; i < n - 1; i++)
-	{
-		uint64_t n_value = n - i;
-
-		if (n_value >= UINT64_MAX / answer)return -3;
-		else answer *= n_value;
-	}
-
-	*ans = answer;
-
-	return 0;
-}
+#endif /*_INCLUDE_GUARD_CALCULATE3_H_*/

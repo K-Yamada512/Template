@@ -22,6 +22,7 @@
 
 #include <calculate1.h>
 #include <calculate2.h>
+#include <calculate3.h>
 
 /*****************************************************************************/
 /*                               define const                                */
