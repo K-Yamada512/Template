@@ -1,29 +1,23 @@
 /*****************************************************************************/
 /*
-*	filename:source.h
+*	filename:calculate4.h
 *	about:
-*		C code template headerfile
+*		calculate function 4 headerfile
 *
 *	attention:
 *
 *	history:
-*		2024/04/13:K.Yamada :create this file
+*		2024/06/03:K.Yamada :create this file
 */
 /*****************************************************************************/
-#ifndef _INCLUDE_GUARD_SOURCE_H_
-#define _INCLUDE_GUARD_SOURCE_H_
+#ifndef _INCLUDE_GUARD_CALCULATE4_H_
+#define _INCLUDE_GUARD_CALCULATE4_H_
 
 /*****************************************************************************/
 /*                         include headerfile                                */
 /*****************************************************************************/
-/*libschrocat.a*/
-#include <schrocat1.h>
-#include <schrocat2.h>
-
-#include <calculate1.h>
-#include <calculate2.h>
-#include <calculate3.h>
-#include <calculate4.h>
+/*standard library*/
+#include <stdint.h>
 
 /*****************************************************************************/
 /*                               define const                                */
@@ -38,11 +32,37 @@
 /*****************************************************************************/
 /*                         define structure (global)                         */
 /*****************************************************************************/
-/*none*/
+struct _runge_kutta_method_structure
+{
+	/*dx/dt = f(t, x(t), const(t))*/
+	double (*p_func)(double, double, double); //t, x(t), const(t)
+	double delta_t;
+	uint64_t order_para;
+};
+
+struct _equation_of_motion_structure
+{
+	/*dv/dt = f(t, v(t), x(t))*/
+	double (*p_func_v)(double, double, double); //t, v(t), x(t)
+	double delta_t;
+	uint64_t order_para;
+	double time;
+	double x_old;
+	double v_old;
+};
+
+/*****************************************************************************/
+/*                               define type                                 */
+/*****************************************************************************/
+typedef struct _runge_kutta_method_structure runge_kutta_method_struct;
+typedef struct _equation_of_motion_structure equation_of_motion_struct;
 
 /*****************************************************************************/
 /*                                 define function                           */
 /*****************************************************************************/
-/*none*/
+/*Runge–Kutta method*/
+int64_t RungeKutta(double* ans, runge_kutta_method_struct rkms, double t, double x, double cons);
 
-#endif /*_INCLUDE_GUARD_SOURCE_H_*/
+int64_t EOM_for_RungeKutta(double* ans_x, double* ans_v, equation_of_motion_struct eoms);
+
+#endif /*_INCLUDE_GUARD_CALCULATE4_H_*/

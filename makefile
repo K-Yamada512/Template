@@ -90,6 +90,16 @@ inspect :
 	@nm $(LIBRARYFILENAME)
 	@echo ""
 
+.PHONY: png
+png :
+	@gnuplot -e "load './script/gnuplot/plot_png.plt'"
+	@echo ""
+
+.PHONY: gif
+gif :
+	@gnuplot -e "load './script/gnuplot/plot_gif.plt'"
+	@echo ""
+
 .PHONY: help
 help :
 	@echo "option"

@@ -10,6 +10,7 @@
 *	history:
 *		2024/04/13:K.Yamada :create this file
 *		2024/06/02:K.Yamada :add exercise 4
+*		2024/06/04:K.Yamada :add exercise 5
 */
 /*****************************************************************************/
 /*****************************************************************************/
@@ -20,6 +21,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <math.h>
+#include <complex.h>
 
 #include <source.h>
 
@@ -49,6 +51,111 @@ static double _exercise_4_2_func(double x){ return exp(-x) - sin(x); }
 static double _exercise_4_2_derivated_func(double x) { return -exp(-x) - cos(x); }
 static double _exercise_4_3_func(double x){ return log(log(x)) + x; }
 static double _exercise_4_3_derivated_func(double x) { return 1 / (x * log(x)) + 1; }
+
+/*
+*	function name:EOM_free_fall
+*	about:
+*		Newton's equation of motion for velocity
+*
+*	in	double		t		:function argument t (time)
+*	in	double		v		:function argument v (velocity)
+*	out	double				:return value of function
+*/
+int64_t test(double* ans, double t, double v, uint64_t count_len, double* const p_const)
+{
+	if (ans == NULL)return -1;
+	if (count_len != 3)return -2;
+	
+	double m = 1.0, g = -9.8, k = 1.0;
+	m = p_const[0];
+	g = p_const[1];
+	k = p_const[2];
+
+	*ans = g - (k / m) * v;
+
+	return 0;
+}
+
+/*
+*	function name:EOM_free_fall
+*	about:
+*		Newton's equation of motion for velocity
+*
+*	in	double		t		:function argument t (time)
+*	in	double		v		:function argument v (velocity)
+*	out	double				:return value of function
+*/
+double EOM_free_fall(double t, double v, double cons)
+{
+	double m = 1.0, k = 1.0, g = -9.8;
+
+	return g - (k / m) * v;
+}
+
+/*
+*	function name:EOM_free_fall_exact_solution
+*	about:
+*		Newton's equation of motion for velocity
+*
+*	in	double		t		:function argument t (time)
+*	in	double		v		:function argument v (velocity)
+*	out	double				:return value of function
+*/
+int64_t EOM_free_fall_exact_solution(double* ans_x, double* ans_v, double initial_x, double initial_v, double t)
+{
+	if (ans_x == NULL)return -1;
+	if (ans_v == NULL)return -1;
+	double m = 1.0, k = 1.0, g = -9.8;
+
+	*ans_x = (-m / k) * ((initial_v - g * (m / k)) * (exp(-t * (k / m)) - 1) - g * t) + initial_x;
+	*ans_v = (initial_v - g * (m / k)) * exp(-t * (k / m)) + g * (m / k);
+	return 0;
+}
+
+/*
+*	function name:EOM_free_fall
+*	about:
+*		Newton's equation of motion for velocity
+*
+*	in	double		t		:function argument t (time)
+*	in	double		v		:function argument v (velocity)
+*	out	double				:return value of function
+*/
+double EOM_damped_oscillation(double t, double v, double x)
+{
+	double omega = 1.0, zeta = 0.5;
+	return -2 * zeta * omega * v - omega * omega * x;
+}
+
+/*
+*	function name:EOM_free_fall
+*	about:
+*		Newton's equation of motion for velocity
+*
+*	in	double		t		:function argument t (time)
+*	in	double		v		:function argument v (velocity)
+*	out	double				:return value of function
+*/
+int64_t EOM_damped_oscillation_exact_solution(double* ans_x, double* ans_v, double initial_x, double initial_v, double t)
+{
+	double omega = 1.0, zeta = 0.5;
+	double sigma = initial_v / (initial_x * omega);
+	double cons_a = initial_x * exp(-zeta * omega * t);
+
+	if(zeta == 1.0)
+	{
+		*ans_x = cons_a * ((sigma + 1) * omega * t + 1);
+		*ans_v = cons_a * (-omega*(((sigma+1)*omega*t+1)+(sigma+1)*omega));
+	}
+	else
+	{
+		double _Complex cons_b = csqrt(zeta * zeta - 1);
+
+		*ans_x = creal(cons_a / 2.0 * ((1+((sigma+zeta)/cons_b))*cexp(omega*t*cons_b)+(1-((sigma+zeta)/cons_b))*cexp(-omega*t*cons_b)));
+		*ans_v = creal(cons_a / 2.0 * (((-zeta * omega)*((1+((sigma+zeta)/cons_b))*cexp(omega*t*cons_b)+(1-((sigma+zeta)/cons_b))*cexp(-omega*t*cons_b)))+(omega*cons_b)*((1+((sigma+zeta)/cons_b))*cexp(omega*t*cons_b)-(1-((sigma+zeta)/cons_b))*cexp(-omega*t*cons_b))));
+	}
+	return 0;
+}
 
 /*
 *	function name:Exercise_1
@@ -283,6 +390,82 @@ int64_t Exercise_4(void)
 }
 
 /*
+*	function name:Exercise_5
+*	about:
+*		calculate Fractrial, Stirling's approximation
+*
+*		Programming Exercise
+*		use header file, if, break, pointer
+*
+*	out	int64_t				:error code
+*/
+int64_t Exercise_5(void)
+{
+	double v_new = 0.0, v_old = 0.0, x_new = 0.0, x_old = 0.0;
+	double exact_ans_x = 0.0, exact_ans_v = 0.0;
+	double delta_t = 0.1, t_max = 10.0;
+	equation_of_motion_struct eoms;
+
+	printf("(1) free fall\r\n");
+	x_old = 0.0;
+	v_old = 10.0;
+	eoms.p_func_v = EOM_free_fall;
+	eoms.delta_t = 0.1;
+	eoms.order_para = 4;
+
+	printf("--------------------------------------------------------------------------\r\n");
+	printf("   t  ,       x        ,       v        ,    exact x     ,    exact v     \r\n");
+	printf("--------------------------------------------------------------------------\r\n");
+	for(int64_t i = 0 ; i < (t_max / delta_t) + delta_t ; i++)
+	{
+		eoms.time = i * delta_t;
+		eoms.x_old = x_old;
+		eoms.v_old = v_old;
+		if(EOM_for_RungeKutta(&x_new, &v_new, eoms) != 0)
+		{
+			printf("error\r\n");
+			break;
+		}
+		EOM_free_fall_exact_solution(&exact_ans_x, &exact_ans_v, 0.0, 10.0, i * delta_t);
+		printf("%6.3lf, %+15.10lf, %+15.10lf, %+15.10lf, %+15.10lf\r\n", i * delta_t, x_old, v_old, exact_ans_x, exact_ans_v);
+		/*update*/
+		x_old = x_new;
+		v_old = v_new;
+	}
+	printf("--------------------------------------------------------------------------\r\n");
+	printf("(2) damped oscillation\r\n");
+	x_old = 1.0;
+	v_old = 0.0;
+	eoms.p_func_v = EOM_damped_oscillation;
+	eoms.delta_t = 0.1;
+	eoms.order_para = 4;
+
+	printf("--------------------------------------------------------------------------\r\n");
+	printf("   t  ,       x        ,       v        ,    exact x     ,    exact v     \r\n");
+	printf("--------------------------------------------------------------------------\r\n");
+	for(int64_t i = 0 ; i < (t_max / delta_t) + delta_t ; i++)
+	{
+		eoms.time = i * delta_t;
+		eoms.x_old = x_old;
+		eoms.v_old = v_old;
+		if(EOM_for_RungeKutta(&x_new, &v_new, eoms) != 0)
+		{
+			printf("error\r\n");
+			break;
+		}
+		EOM_damped_oscillation_exact_solution(&exact_ans_x, &exact_ans_v, 1.0, 0.0, i * delta_t);
+		printf("%6.3lf, %+15.10lf, %+15.10lf, %+15.10lf, %+15.10lf\r\n", i * delta_t, x_old, v_old, exact_ans_x, exact_ans_v);
+		/*update*/
+		x_old = x_new;
+		v_old = v_new;
+	}
+	printf("--------------------------------------------------------------------------\r\n");
+	printf("\r\n");
+
+	return 0;
+}
+
+/*
 *	function name:main
 *	about:
 *		project main function
@@ -306,6 +489,24 @@ int64_t main(uint64_t argc, char const* argv[])
 
 	printf("Programming Exercise Q.4\r\n");
 	Exercise_4();
+
+	printf("Programming Exercise Q.5\r\n");
+	Exercise_5();
+
+	double ans = 0.0;
+	double a[] = {1.0, -9.8, 1.0};
+	double b[] = {0.0, 1.0, 2.0};
+	double* const p_a = a;
+	const double* p_b = a;
+	const double* const p_c = a;
+	// p_a = b; //bad (compile error)
+	// p_a[0] = 1.0;
+	// p_b = b;
+	// p_b[0] = 1.0; //bad (compile error)
+	// p_c = b; //bad (compile error)
+	// p_c[0] = 1.0; //bad (compile error)
+
+	test(&ans, 0.0, 0.0, 3, p_a);
 
 	/*use static library (.a file)*/
 	int cat = 0;

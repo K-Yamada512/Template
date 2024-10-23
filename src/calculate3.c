@@ -40,7 +40,7 @@
 /*
 *	function name:BisectionMethod
 *	about:
-*		calculate  numerical solutions to equations by bisection method
+*		calculate numerical solutions to equations by bisection method
 *
 *	out	double*						ans			:pointer variable to store the answer to the calculation
 *	out	uint64_t*					breakpoint	:pointer variable to store the loop count
@@ -86,7 +86,7 @@ int64_t BisectionMethod(double* ans, uint64_t* breakpoint, bisection_method_stru
 /*
 *	function name:NewtonRaphson
 *	about:
-*		calculate  numerical solutions to equations by Newton–Raphson method
+*		calculate numerical solutions to equations by Newton–Raphson method
 *
 *	out	double*						ans			:pointer variable to store the answer to the calculation
 *	out	uint64_t*					breakpoint	:pointer variable to store the loop count
