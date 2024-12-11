@@ -4,7 +4,6 @@
 # 
 #	history:
 # 		2024/06/02:K.Yamada :create this file
-# 		2024/12/11:K.Yamada :add build-other
 #
 
 # Variables Used by Implicit Rules
@@ -12,33 +11,30 @@ AR := ar rcvs
 CC := gcc
 CXX :=
 RM := rm -rf
-CFLAGS := -O1 -Iinclude -Itest -Iparts/create_log/include
+CFLAGS := -O1 -Iinclude -Itest
 CPPFLAGS :=
 LDFLAGS := -Llib
-LDLIBS := -lm -lclog
+LDLIBS :=
 
 # Variables Used by My Rules
-PROJECTNAME := Template
-LIBRARYNAME := exercise
+PROJECTNAME := Create_Log
+LIBRARYNAME := clog
 OUTDIR := ./build
 BINDIR := ./bin
-LIBDIR := ./lib
-PARDIR := ./parts
 INCDIR := ./include
 SRCDIR := ./src
 TESTDIR := ./test
 
 OBJDIR := $(OUTDIR)/obj
 DEPDIR := $(OUTDIR)/dep
-MAKEFILESDIR := $(wildcard $(PARDIR)/*)
 EXECUTEFILENAME := $(BINDIR)/$(PROJECTNAME).out
-LIBRARYFILENAME := $(BINDIR)/lib$(LIBRARYNAME).a
+# LIBRARYFILENAME := $(BINDIR)/lib$(LIBRARYNAME).a
+LIBRARYFILENAME := ../../lib/lib$(LIBRARYNAME).a
 SRCS := $(wildcard $(SRCDIR)/*.c)
 TESTS := $(wildcard $(TESTDIR)/*.c)
 SRCOBJS := $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 TESTOBJS := $(addprefix $(OBJDIR)/, $(notdir $(TESTS:.c=.o)))
 DEPS := $(addprefix $(DEPDIR)/, $(notdir $(SRCS:.c=.d))) + $(addprefix $(DEPDIR)/, $(notdir $(TESTS:.c=.d)))
-LIBS := $(wildcard $(LIBDIR)/*.a)
 
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
 
@@ -69,11 +65,8 @@ $(OBJDIR):
 $(DEPDIR):
 	@mkdir -p $@
 
-$(LIBDIR):
-	@mkdir -p $@
-
 .PHONY: all
-all : clean build-other $(EXECUTEFILENAME)
+all : clean $(EXECUTEFILENAME) execute
 
 .PHONY: clean
 clean :
@@ -108,27 +101,15 @@ gif :
 	@gnuplot -e "load './script/gnuplot/plot_gif.plt'"
 	@echo ""
 
-.PHONY: build-other
-build-other:
-	@echo "Remove \"$(LIBS)\""
-	@$(RM) $(LIBS)
-	@for dir in $(MAKEFILESDIR); do \
-		cd $$dir; \
-		make lib; \
-		cd ../..; \
-	done
-	@echo ""
-
 .PHONY: help
 help :
 	@echo "option"
-	@echo "    (default) : Compile"
-	@echo "          all : Crean and Compile"
-	@echo "      execute : Execute \"$(EXECUTEFILENAME)\""
-	@echo "        clean : Crean (Remove \"$(OBJDIR) $(DEPDIR) $(EXECUTEFILENAME) $(LIBRARYFILENAME)\")"
-	@echo "        debug : Compile debug code (define _DEBUG)"
-	@echo "          lib : "
-	@echo "      inspect : "
-	@echo "  build-other : Crean and Compile Library"
-	@echo "         help : This"
+	@echo "  (default) : Compile"
+	@echo "        all : Crean and Compile and Execute"
+	@echo "    execute : Execute \"$(EXECUTEFILENAME)\""
+	@echo "      clean : Crean (Remove \"$(OBJDIR) $(DEPDIR) $(EXECUTEFILENAME) $(LIBRARYFILENAME)\")"
+	@echo "      debug : Compile debug code (define _DEBUG)"
+	@echo "        lib : "
+	@echo "    inspect : "
+	@echo "       help : This"
 	@echo ""

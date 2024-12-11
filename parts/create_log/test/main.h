@@ -1,29 +1,22 @@
 /*****************************************************************************/
 /*
-*	filename:source.h
+*	filename:main.h
 *	about:
 *		C code template headerfile
 *
 *	attention:
 *
 *	history:
-*		2024/04/13:K.Yamada :create this file
+*		2024/11/03:K.Yamada :create this file
 */
 /*****************************************************************************/
-#ifndef _INCLUDE_GUARD_SOURCE_H_
-#define _INCLUDE_GUARD_SOURCE_H_
+#ifndef _INCLUDE_GUARD_MAIN_H_
+#define _INCLUDE_GUARD_MAIN_H_
 
 /*****************************************************************************/
 /*                         include headerfile                                */
 /*****************************************************************************/
-/*libschrocat.a*/
-#include <schrocat1.h>
-#include <schrocat2.h>
-
-#include <calculate1.h>
-#include <calculate2.h>
-#include <calculate3.h>
-#include <calculate4.h>
+/*none*/
 
 /*****************************************************************************/
 /*                               define const                                */
@@ -45,4 +38,4 @@
 /*****************************************************************************/
 /*none*/
 
-#endif /*_INCLUDE_GUARD_SOURCE_H_*/
+#endif /*_INCLUDE_GUARD_MAIN_H_*/

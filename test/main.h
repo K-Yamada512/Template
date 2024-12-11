@@ -1,24 +1,21 @@
 /*****************************************************************************/
 /*
-*	filename:calculate1.h
+*	filename:source.h
 *	about:
-*		calculate function 1 headerfile
+*		C code template headerfile
 *
 *	attention:
 *
 *	history:
 *		2024/04/13:K.Yamada :create this file
-*		2024/06/02:K.Yamada :create function (Fractrial)
 */
 /*****************************************************************************/
-#ifndef _INCLUDE_GUARD_CALCULATE1_H_
-#define _INCLUDE_GUARD_CALCULATE1_H_
+#ifndef _INCLUDE_GUARD_MAIN_H_
+#define _INCLUDE_GUARD_MAIN_H_
 
 /*****************************************************************************/
 /*                         include headerfile                                */
 /*****************************************************************************/
-/*standard library*/
-#include <stdint.h>
 
 /*****************************************************************************/
 /*                               define const                                */
@@ -38,7 +35,6 @@
 /*****************************************************************************/
 /*                                 define function                           */
 /*****************************************************************************/
+/*none*/
 
-int64_t Fractrial(uint64_t* ans, uint64_t n);
-
-#endif /*_INCLUDE_GUARD_CALCULATE1_H_*/
+#endif /*_INCLUDE_GUARD_MAIN_H_*/

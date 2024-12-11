@@ -80,7 +80,8 @@ debug : clean fclean $(EXECUTEFILENAME)
 .PHONY: lib
 lib : $(OBJS)
 	@echo "\e[33mGenerate static library(lib$(LIBRARYNAME).a) from $(OBJS)\e[m"
-	$(AR) lib$(LIBRARYNAME).a $(OBJS)
+#	$(AR) lib$(LIBRARYNAME).a $(OBJS)
+	$(AR) ../../lib/lib$(LIBRARYNAME).a $(OBJS)
 	@echo ""
 
 .PHONY: inspect

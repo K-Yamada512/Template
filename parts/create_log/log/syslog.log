@@ -1,0 +1,57 @@
+2024/12/11/24 03:22:29:[INFO  ] test/main.c 59: main() - test
+2024/12/11/24 03:22:29:[ERROR ] src/log.c 125: test_function() - No such file or directory
+2024/12/11/24 03:22:29:[INFO  ] test/main.c 61: main() - test 1
+2024/12/11/24 03:22:41:[INFO  ] test/main.c 59: main() - test
+2024/12/11/24 03:22:41:[ERROR ] src/log.c 125: test_function() - No such file or directory
+2024/12/11/24 03:22:41:[INFO  ] test/main.c 61: main() - test 1
+2024/12/11/24 03:27:47:[INFO  ] test/main.c 59: main() - test
+2024/12/11/24 03:27:47:[ERROR ] src/log.c 156: test_function() - No such file or directory
+2024/12/11/24 03:27:47:[INFO  ] test/main.c 61: main() - test 1
+2024/12/11/24 03:49:16:[INFO  ] test/main.c 59: main() - test
+2024/12/11/24 03:49:16:[ERROR ] src/log.c 156: test_function() - No such file or directory
+2024/12/11/24 03:49:16:[INFO  ] test/main.c 61: main() - test 1
+2024/12/11/24 03:49:18:[INFO  ] test/main.c 59: main() - test
+2024/12/11/24 03:49:18:[ERROR ] src/log.c 181: test_function() - No such file or directory
+2024/12/11/24 03:49:18:[INFO  ] test/main.c 61: main() - test 1
+2024/12/11/24 03:50:16:[INFO  ] test/main.c 59: main() - test
+2024/12/11/24 03:50:16:[ERROR ] src/log.c 181: test_function() - No such file or directory
+2024/12/11/24 03:50:16:[INFO  ] test/main.c 61: main() - test 1
+2024/12/11/24 03:52:29:[INFO  ] test/main.c 59: main() - start
+2024/12/11/24 03:52:29:[ERROR ] src/log.c 181: test_function() - No such file or directory
+2024/12/11/24 03:52:29:[INFO  ] test/main.c 67: main() - end
+2024/12/11/24 03:53:28 [INFO  ] test/main.c 59: main() - start
+2024/12/11/24 03:53:28 [ERROR ] src/log.c 181: test_function() - No such file or directory
+2024/12/11/24 03:53:28 [INFO  ] test/main.c 67: main() - end
+2024/12/11/24 04:05:31 [INFO  ] test/main.c 59: main() - start
+2024/12/11/24 04:05:31 [ERROR ] src/log.c 192: test_function() - No such file or directory
+2024/12/11/24 04:05:31 [INFO  ] test/main.c 67: main() - end
+2024/12/11/24 04:11:18.629 [INFO  ] test/main.c 59: main() - start
+2024/12/11/24 04:11:18.629 [ERROR ] src/log.c 199: test_function() - No such file or directory
+2024/12/11/24 04:11:18.629 [INFO  ] test/main.c 67: main() - end
+2024/12/11/24 04:12:05.214 [INFO  ] test/main.c 59: main() - start
+2024/12/11/24 04:12:05.214 [ERROR ] src/log.c 190: test_function() - No such file or directory
+2024/12/11/24 04:12:05.214 [INFO  ] test/main.c 67: main() - end
+2024/12/11/24 04:13:28.370 [INFO  ] test/main.c 59: main() - start
+2024/12/11/24 04:13:28.370 [ERROR ] src/log.c 190: test_function() - No such file or directory
+2024/12/11/24 04:13:28.370 [INFO  ] test/main.c 67: main() - end
+2024/12/11/24 16:01:55.588 [INFO  ] test/main.c 61: main() - start
+
+2024/12/11/24 16:01:55.588 [ERROR ] src/log.c 188: test_function() - No such file or directory
+
+2024/12/11/24 16:01:55.588 [INFO  ] test/main.c 69: main() - end
+
+2024/12/11/24 16:04:15.166 [INFO  ] test/main.c 61: main() - start
+
+2024/12/11/24 16:04:15.166 [ERROR ] src/log.c 188: test_function() - No such file or directory
+
+2024/12/11/24 16:04:15.166 [INFO  ] test/main.c 69: main() - end
+
+2024/12/11 17:11:25.489 [INFO  ] test/main.c 61: main() - start
+
+2024/12/11 17:11:25.489 [ERROR ] src/log.c 188: test_function() - No such file or directory
+
+2024/12/11 17:11:25.489 [INFO  ] test/main.c 69: main() - end
+
+2024/12/11 17:12:40.785 [INFO  ] test/main.c 61: main() - start
+2024/12/11 17:12:40.785 [ERROR ] src/log.c 188: test_function() - No such file or directory
+2024/12/11 17:12:40.785 [INFO  ] test/main.c 69: main() - end

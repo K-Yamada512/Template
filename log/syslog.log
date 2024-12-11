@@ -1,0 +1,10 @@
+2024/12/11 17:14:11.866 [INFO  ] test/main.c 115: main() - start
+2024/12/11 17:14:11.874 [INFO  ] test/main.c 165: main() - end
+2024/12/11 17:15:42.462 [INFO  ] test/main.c 115: main() - start
+2024/12/11 17:15:42.471 [INFO  ] test/main.c 165: main() - end
+2024/12/11 18:38:10.743 [INFO  ] test/main.c 115: main() - start
+2024/12/11 18:38:10.749 [INFO  ] test/main.c 165: main() - end
+2024/12/11 18:43:12.648 [INFO  ] test/main.c 115: main() - start
+2024/12/11 18:43:12.653 [INFO  ] test/main.c 165: main() - end
+2024/12/11 18:46:47.688 [INFO  ] test/main.c 115: main() - start
+2024/12/11 18:46:47.696 [INFO  ] test/main.c 165: main() - end

@@ -1,29 +1,31 @@
 /*****************************************************************************/
 /*
-*	filename:calculate1.c
+*	filename:main.c
 *	about:
-*		calculate function 1
-*
+*		C code template main file
+*		
 *	attention:
+*		library libschrocat.a is used, include schrocat1.h and schrocat2.h
 *
 *	history:
-*		2024/04/13:K.Yamada :create this file
-*		2024/06/02:K.Yamada :create function (Fractrial)
+*		2024/11/03:K.Yamada :create this file
 */
 /*****************************************************************************/
 /*****************************************************************************/
 /*                         include headerfile                                */
 /*****************************************************************************/
 /*standard library*/
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
-#include <calculate1.h>
+#include <log.h>
+
+#include <main.h>
 
 /*****************************************************************************/
-/*                               define const                                */
+/*                               define macro                                */
 /*****************************************************************************/
-/*none*/
 
 /*****************************************************************************/
 /*                         define variable (global)                          */
@@ -36,35 +38,34 @@
 /*none*/
 
 /*****************************************************************************/
+/*                         define type (global)                              */
+/*****************************************************************************/
+/*none*/
+
+/*****************************************************************************/
 /*                                 define function                           */
 /*****************************************************************************/
 /*
-*	function name:Fractrial
+*	function name:main
 *	about:
-*		calculate fractrial (n!)
+*		project main function
 *
-*	out	uint64_t*	ans		:pointer variable to store the answer to the calculation
-*	in	uint64_t	n		:natural number
+*	in	uint64_t	argc	:command line argument number
+*	in	char*		argv[]	:command line argument pointer
 *	out	int64_t				:error code
 */
-int64_t Fractrial(uint64_t* ans, uint64_t n)
+int64_t main(uint64_t argc, char const* argv[])
 {
-	if (ans == NULL)return -1;
-	if (n < 1)return -2;
+	int64_t ret = 0;
 
-	*ans = 0;
+	INFOMSG("start");
+	test_function();
 
-	uint64_t answer = 1;
+	/*switch compile option (debug code)*/
+#ifdef _DEBUG
+	printf("DEBUG code\r\n\r\n");
+#endif /*_DEBUG*/
 
-	for (uint64_t i = 0; i < n - 1; i++)
-	{
-		uint64_t n_value = n - i;
-
-		if (n_value >= UINT64_MAX / answer)return -3;
-		else answer *= n_value;
-	}
-
-	*ans = answer;
-
+	INFOMSG("end");
 	return 0;
 }

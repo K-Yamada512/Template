@@ -1,0 +1,11 @@
+(1) f(x) = x^3 + 3x - 1
+Bisection Method      : 0.3221853546(Break Point : TIMEOUT)
+Newton-Raphson Method : 0.3221853546(Break Point : 20)
+
+(2) f(x) = e^-x - sin(x)
+Bisection Method      : 0.5885327440(Break Point : TIMEOUT)
+Newton-Raphson Method : 0.5885327440(Break Point : 5)
+
+(3) f(x) = ln(ln(x)) + x
+Bisection Method      : 1.3097995858(Break Point : TIMEOUT)
+Newton-Raphson Method : 1.3097995858(Break Point : 5)
