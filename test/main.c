@@ -110,10 +110,10 @@ int64_t test(double a[], double b[])
 *	in	char*		argv[]	:command line argument pointer
 *	out	int64_t				:error code
 */
-int64_t main(uint64_t argc, char const* argv[])
+int main(int argc, char const* argv[])
 {
 	INFOMSG("start");
-	int64_t ret = 0;
+	int ret = 0;
 
 	double ans = 0.0;
 	double a[] = {1.0, -9.8, 1.0};

@@ -5,6 +5,7 @@
 #	history:
 # 		2024/06/02:K.Yamada :create this file
 # 		2024/12/11:K.Yamada :add build-other
+# 		2024/12/23:K.Yamada :support icx compiler
 #
 
 # Variables Used by Implicit Rules
@@ -51,10 +52,10 @@ $(LIBRARYFILENAME) : $(SRCOBJS) | $(BINDIR)
 	@echo ""
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPDIR)/%.d | $(OBJDIR) $(DEPDIR)
-	@$(CC) $(DEPFLAGS) $< $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -c -o $@
+	@$(CC) $(DEPFLAGS) $< $(CFLAGS) $(CPPFLAGS) -c -o $@
 
 $(OBJDIR)/%.o : $(TESTDIR)/%.c $(DEPDIR)/%.d | $(OBJDIR) $(DEPDIR)
-	@$(CC) $(DEPFLAGS) $< $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -c -o $@
+	@$(CC) $(DEPFLAGS) $< $(CFLAGS) $(CPPFLAGS) -c -o $@
 
 include $(wildcard $(DEPS))
 
@@ -127,8 +128,8 @@ help :
 	@echo "      execute : Execute \"$(EXECUTEFILENAME)\""
 	@echo "        clean : Crean (Remove \"$(OBJDIR) $(DEPDIR) $(EXECUTEFILENAME) $(LIBRARYFILENAME)\")"
 	@echo "        debug : Compile debug code (define _DEBUG)"
-	@echo "          lib : "
-	@echo "      inspect : "
+	@echo "          lib : Generate static library"
+	@echo "      inspect : Inspect the generated static library"
 	@echo "  build-other : Crean and Compile Library"
 	@echo "         help : This"
 	@echo ""
